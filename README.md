@@ -10,16 +10,13 @@
 
 An Android application for downloading YouTube videos using my personal server with the dockerized backend.
 
-
-
-
 ## Features
 
-### Already Created
+### Will have this
 - Quality Selection (360p-4k)
 - Downloaded Videos Management
 - Android and iOS
-### Upcomming!! *(maybe)*
+### Possible in the future
 - Instagram Reels
 - In-app Youtube Browsing
 
