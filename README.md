@@ -1,65 +1,52 @@
+# Free Youtube Backend
 
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgr](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=dockersitorio contiene el **backend** del proyecto Free Youtube, que incluye la API y la base de datos, todo empaquetado en un contenedor Docker.
 
+## Características
 
-# Free Youtube
+### Implementadas
+- API para gestionar descargas de videos de YouTube.
+- Base de datos PostgreSQL para almacenar información relacionada con las descargas.
+- Backend desarrollado con FastAPI.
 
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+### Futuras mejoras
+- Soporte para otras plataformas como Instagram Reels.
+- Funcionalidades avanzadas de gestión de usuarios y permisos.
 
-An Android application for downloading YouTube videos using my personal server with the dockerized backend.
+## Despliegue
 
-## Features
+### Requisitos previos
+Para desplegar este backend, asegúrate de tener instalado Docker en tu sistema. Sigue las instrucciones según tu sistema operativo:
 
-### Will have this
-- Quality Selection (360p-4k)
-- Downloaded Videos Management
-- Android and iOS
-### Possible in the future
-- Instagram Reels
-- In-app Youtube Browsing
+#### Windows
+Descarga e instala Docker Desktop desde su sitio oficial.
 
+#### Linux
+Instala Docker siguiendo las guías oficiales para tu distribución.
 
-## Deployment
+### Instrucciones para ejecutar el backend localmente
 
-To deploy this project run, you'll need my passwd if you want to use my server so ask me. if not, just go to "Run Backend Locally"
+1. Clona este repositorio:
+   ```bash
+   git clone 
+   cd 
+   ```
 
-### Dependencies Windows
-There's no native client for docker in windows so you have to download docker Desktop
-```bash
-  # I don't know yet
-```
+2. Construye y ejecuta el contenedor Docker:
+   ```bash
+   docker-compose up --build
+   ```
 
-### Dependencies Linux
-```bash
-  # I don't know yet
-```
-### Project
+3. Accede a la API en `http://localhost:8000`.
 
-```bash
-  # I don't know yet
-```
-
-### Run Backend Locally
-
-Download and deploy the dockerized backend in your own device and run it I guess
 ## FAQ
 
-#### Is it legal to download YouTube videos using this app?
-No, that's why I can't make money with this 🥺
+#### ¿Qué tecnologías se usan en este backend?
+FastAPI para la API y PostgreSQL como base de datos, todo empaquetado en Docker.
 
-#### What formats are supported for video downloads?
-MP4, maybe more later
+#### ¿Es necesario configurar algo antes de usarlo?
+No, el contenedor incluye todas las dependencias necesarias.
 
-#### Can I download entire playlists?
-No, not yet 🥺
+#### ¿Se puede usar este backend para otros propósitos?
+Sí, pero recuerda que está diseñado específicamente para el proyecto Free Youtube.
 
-#### Is the app available for iOS devices?
-YES
-
-
-
-## Additional Information
-
-This app have no commercional use and is maded for educational purposes
