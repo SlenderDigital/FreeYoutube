@@ -1,6 +1,6 @@
 # Free Youtube Backend
 
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgr](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=dockersitorio 
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgr](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=dockersitorio) 
 
 Contiene el **backend** del proyecto Free Youtube, que incluye la API y la base de datos, todo empaquetado en un contenedor Docker.
 
