@@ -1,14 +1,22 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from app.yt_logic import get_available_resolutions
+from app.yt_logic import get_available_resolutions, extract_video_info
 
 app = FastAPI()
 
-## class Video(BaseModel):
-    ## name: str
-    ## ## TODO: Image Youtube Video Preview | ADD LATER
-    ## url: str
-    ## resolutions: list[int] 
+@app.get("/yt/video-info/{video_url}")
+async def get_video_info(video_url: str):
+    try:
+        video_info = await extract_video_info(video_url)  # Await the async function
+        return {
+            "title": video_info.get("title"),
+            "duration": video_info.get("duration"),
+            "thumbnail": video_info.get("thumbnail"),
+            "description": video_info.get("description"),
+            "formats": video_info.get("formats")
+        }
+    except Exception as e:
+        return {"error": str(e)}
 
 
 @app.get("/yt/qualities/{video_url}")
