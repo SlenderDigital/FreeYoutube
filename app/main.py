@@ -1,45 +1,27 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from app.yt_logic import get_available_resolutions, extract_video_info
+from app.yt_logic import extract_video_info
 
 app = FastAPI()
 
-@app.get("/yt/video-info/{video_url}")
-async def get_video_info(video_url: str):
+@app.get("/yt/video-info")
+def get_video_info(video_url = "https://youtu.be/GEDSmE9KSHI?si=ejh8skpuMMOqfTQN"):
     try:
-        video_info = await extract_video_info(video_url)  # Await the async function
-        return {
-            "title": video_info.get("title"),
-            "duration": video_info.get("duration"),
-            "thumbnail": video_info.get("thumbnail"),
-            "description": video_info.get("description"),
-            "formats": video_info.get("formats")
-        }
+        Video = extract_video_info(video_url)  # Call the sync function
+        return {"Video Info": Video}
     except Exception as e:
-        return {"error": str(e)}
-
-
-@app.get("/yt/qualities/{video_url}")
-async def get_resolutions(video_url: str): 
-    try:
-        resolutions = await get_available_resolutions(video_url)  # Await the async function
-        return {"resolutions": resolutions}
-    except Exception as e:
-        return {"error": str(e)}
+        return {"Unexpected Error": str(e)}
     
-
-
-@app.post("/yt-link/qualities/")
-async def read_item():
-    return {"item_id": "", "q": "sss"}
-
-
-
 @app.post("/yt/download/{video_url}/{resolution}")
-async def download_video_endpoint(video_url: str, resolution: int):
+def download_video(video_url: str, resolution: int | None):
     try:
-        from app.yt_logic import download_video
-        await download_video(video_url, resolution=resolution)  # Await if download_video is async
-        return {"message": "Download initiated."}
+        if resolution:
+            download_video(video_url, resolution)
+            return {"message": "Download started"}
+        else:
+            return {"error": "Resolution must be specified for download."}
     except Exception as e:
         return {"error": str(e)}
+
+@app.get("/yt/test")
+def test():
+    return {"message": "Hello, World!"}
