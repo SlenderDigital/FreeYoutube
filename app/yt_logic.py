@@ -1,32 +1,73 @@
 import yt_dlp
+from app.models import Video, Format
 
-def extract_video_info(video_url):
-    """Extract video info without downloading."""
-    with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
-        return ydl.extract_info(video_url, download=False)
 
-async def get_available_resolutions(video_url):
-    """Fetch available resolutions asynchronously."""
+def fetch_video_info(video_url: str):
+    """Fetch video metadata using yt_dlp."""
     try:
-        # Use yt_dlp asynchronously
         with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
-            info = await ydl.extract_info(video_url, download=False)  # Ensure this is awaited if supported
-        
-        resolutions = set()
-        for fmt in info.get('formats', []):
-            if fmt.get('vcodec') != 'none':  # Video formats only
-                res = fmt.get('height')
-                if res and res >= 720:  # Only consider resolutions up to 720p
-                    resolutions.add(res)
-        return sorted(resolutions, reverse=True)
+            return ydl.extract_info(url=video_url, download=False)
     except Exception as e:
-        raise e
+        raise Exception(f"Failed to fetch video info: {str(e)}")
 
 
-def download_video(video_url, save_path="/videos", resolution=None):
-    """Download video with specified resolution."""
+def format_duration(raw_duration: int) -> str:
+    """Format duration as hours:minutes:seconds."""
+    return f"{raw_duration // 3600}:{(raw_duration % 3600) // 60}:{raw_duration % 60}"
+
+
+def filter_formats(formats: list, target_resolutions: set) -> list[Format]:
+    """Filter and process video formats."""
+    best_formats = {}
+
+    for fmt in formats:
+        if fmt.get("vcodec") != "none" and fmt.get("height") in target_resolutions and fmt.get("ext") == "mp4":
+            resolution = fmt.get("height")
+            file_size = fmt.get("filesize") or 0  # Handle missing filesize
+
+            # Keep the best format for each resolution
+            if resolution not in best_formats or file_size > best_formats[resolution].file_size:
+                best_formats[resolution] = Format(
+                    resolution=str(resolution),  # Convert to string
+                    file_size=str(file_size),  # Convert to string
+                    ext=fmt.get("ext"),
+                    format_id=fmt.get("format_id")
+                )
+
+    # Convert file sizes to human-readable format
+    for fmt in best_formats.values():
+        fmt.file_size = (
+            f"{int(fmt.file_size) / (1024 ** 3):.2f} GB" if int(fmt.file_size) >= 1024 ** 3 else f"{int(fmt.file_size) / (1024 ** 2):.2f} MB"
+        )
+
+    return list(best_formats.values())
+
+
+def extract_video_info(video_url: str) -> Video:
+    """Extract video information and return a Video object."""
+    info = fetch_video_info(video_url)
+
+    # Filter formats
+    target_resolutions = {480, 720, 1080, 1440, 2160}
+    formats = filter_formats(info.get("formats", []), target_resolutions)
+
+    # Create Video object
+    video_details = Video(
+        title = info.get("title"),
+        description = info.get("description"),
+        duration = format_duration(info.get("duration", 0)),
+        formats=formats,
+        video_url=video_url,
+        download_status=False 
+    )
+
+    return video_details
+
+def download_video(video_url: str, save_path="app/video/", resolution=int|None):
+    """Download video with the specified resolution."""
     try:
-        info = extract_video_info(video_url)
+        video_info = extract_video_info(video_url)
+
         if resolution:
             ydl_opts = {
                 'format': f'bestvideo[height={resolution}]+bestaudio/best',
@@ -36,9 +77,9 @@ def download_video(video_url, save_path="/videos", resolution=None):
             }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([video_url])
-            print(f"\n✅ Download complete! Saved in: {save_path}")
+            print(f"Download complete! Saved in: {save_path}")
         else:
             print("Resolution must be specified for download.")
-    
     except Exception as e:
-        print(f"\n❌ Error: {str(e)}")
+        print(f"Error: {str(e)}")
+
