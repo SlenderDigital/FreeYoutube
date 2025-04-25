@@ -10,11 +10,9 @@ def fetch_video_info(video_url: str):
     except Exception as e:
         raise Exception(f"Failed to fetch video info: {str(e)}")
 
-
 def format_duration(raw_duration: int) -> str:
     """Format duration as hours:minutes:seconds."""
     return f"{raw_duration // 3600}:{(raw_duration % 3600) // 60}:{raw_duration % 60}"
-
 
 def filter_formats(formats: list, target_resolutions: set) -> list[Format]:
     """Filter and process video formats."""
@@ -42,7 +40,6 @@ def filter_formats(formats: list, target_resolutions: set) -> list[Format]:
 
     return list(best_formats.values())
 
-
 def extract_video_info(video_url: str) -> Video:
     """Extract video information and return a Video object."""
     info = fetch_video_info(video_url)
@@ -63,7 +60,7 @@ def extract_video_info(video_url: str) -> Video:
 
     return video_details
 
-def download_video(video_url: str, save_path="app/video/", resolution=int|None):
+def download_yt_video(video_url: str, save_path="app/video/", resolution=int|None):
     """Download video with the specified resolution."""
     try:
         video_info = extract_video_info(video_url)
