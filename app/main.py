@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, File, UploadFile, HTTPException
+from fastapi import FastAPI, Query, HTTPException
 from app.yt_logic import extract_video_info, download_yt_video
 from app.config import VIDEO_STORAGE, readable_size
 
@@ -27,7 +27,7 @@ def get_video_size(title: str = Query(..., description="Title of the video")):
     }
     
 @app.post("/yt/download") # * Local Download
-def download_video(
+def get_video(
     video_url: str = Query(..., description="YouTube video URL"),
     resolution: int = Query(..., description="Video resolution")
 ):
