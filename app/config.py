@@ -1,7 +1,7 @@
 from pathlib import Path
 
 """DIRECTORIES"""
-VIDEO_STORAGE = Path("app/videos")
+VIDEO_STORAGE = Path("videos")
 
 """FUNCTIONS"""
 

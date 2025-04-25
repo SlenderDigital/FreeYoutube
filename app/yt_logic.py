@@ -60,7 +60,7 @@ def extract_video_info(video_url: str) -> Video:
 
     return video_details
 
-def download_yt_video(video_url: str, save_path="app/video/", resolution=int|None):
+def download_yt_video(video_url: str, save_path="videos", resolution=int|None):
     """Download video with the specified resolution."""
     try:
         video_info = extract_video_info(video_url)
