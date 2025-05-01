@@ -1,5 +1,6 @@
 import yt_dlp
-from app.models import Video, Format
+from app.schemas import Video, Format
+from app.config import readable_size
 
 
 def fetch_video_info(video_url: str):
@@ -34,9 +35,7 @@ def filter_formats(formats: list, target_resolutions: set) -> list[Format]:
 
     # Convert file sizes to human-readable format
     for fmt in best_formats.values():
-        fmt.file_size = (
-            f"{int(fmt.file_size) / (1024 ** 3):.2f} GB" if int(fmt.file_size) >= 1024 ** 3 else f"{int(fmt.file_size) / (1024 ** 2):.2f} MB"
-        )
+        fmt.file_size = readable_size(int(fmt.file_size))
 
     return list(best_formats.values())
 

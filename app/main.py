@@ -24,7 +24,7 @@ def get_video_size(title: str = Query(..., description="Title of the video")):
     return {
         "title": title,
         "size": readable_size(target_file.stat().st_size)
-    }
+    } 
     
 @app.post("/yt/download") # * Local Download
 def get_video(
