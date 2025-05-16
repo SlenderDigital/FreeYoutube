@@ -7,7 +7,7 @@ class Format(BaseModel):
 
 class Video(BaseModel):                         
     title: str
-    # description: str | None = None        Maybe the Frontend will use it but it has to be reformated
+    # description: str | None = None        Maybe the Frontend will 
     duration: str                
     formats: list[Format]         
     video_url: str                              
