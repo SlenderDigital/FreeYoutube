@@ -15,7 +15,7 @@ python -m app.PACKAGE.FILE
 El proyecto utiliza una constante llamada `VIDEO_STORAGE` en `app/config.py` para definir la ruta donde se almacenan los videos descargados. **Ten cuidado con esta ruta**, ya que actualmente está configurada como:
 
 ```python
-VIDEO_STORAGE = Path("~/FreeYoutube/app/storage")
+VIDEO_STORAGE = Path("storage")
 ```
 
 Esto significa que los videos se almacenarán en una carpeta específica dentro del proyecto. Si decides cambiar esta ruta, asegúrate de que la nueva ubicación exista y tenga los permisos adecuados para escritura.
