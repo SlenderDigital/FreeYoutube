@@ -6,10 +6,8 @@ A comprehensive **backend** for the Free YouTube project, featuring a REST API a
 
 - **Video Information Retrieval**: Fetch YouTube video metadata including title, duration, and available resolutions
 - **Video Download**: Download YouTube videos in multiple resolutions (2160p, 1440p, 1080p, 720p, 480p)
-- **Smart Storage Management**: Automatic file naming and storage organization
-- **Database Integration**: SQLite database for tracking downloaded videos and their formats
-- **History Management**: View and manage your download history
-- **REST API**: Full FastAPI-based REST API with automatic documentation
+- **Database**: SQLite database for tracking downloaded videos and their formats
+- **History**: View and manage your download history (for now only one person)
 
 ## 📋 API Endpoints
 
